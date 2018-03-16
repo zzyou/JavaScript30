@@ -64,9 +64,9 @@
     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
 
     if (!audio) return; // stop the function from running all together
+    
     audio.currentTime = 0; // rewind to the start
     audio.play();
-
     key.classList.add('playing'); // similar to .addClass in jQuery
   };
 
@@ -77,7 +77,7 @@
 
   const keys = document.querySelectorAll('.key');
   
-  keys.forEach(key => key.addEventListener('transitioned', removeTransition));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
   window.addEventListener('keydown', playSound);
 
