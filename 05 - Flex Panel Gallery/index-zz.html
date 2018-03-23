@@ -24,6 +24,9 @@
     .panels {
       min-height:100vh;
       overflow: hidden;
+      /* check out his flexbox.io to learn more about flex */
+      /* makes it side by side, instead of stacked over */
+      display: flex;
     }
 
     .panel {
@@ -41,6 +44,17 @@
       font-size: 20px;
       background-size:cover;
       background-position:center;
+      /* flex: 1 will make them evenly distributed */
+      flex: 1;
+      /* justify-content only centered left and right */
+      justify-content: center;
+      /* align-items doesn't do much either */ 
+      align-items: center;
+      /* we can .panel not only a flex item, but also a flex container */
+      /* but the three words inside are displayed from left to right, as default */
+      display: flex;
+      /* change the flex default direction to column */
+      flex-direction: column;
     }
 
 
@@ -50,10 +64,33 @@
     .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
     .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
 
+    /* flex items */
     .panel > * {
       margin:0;
       width: 100%;
       transition:transform 0.5s;
+      /* give .panel a border, just to see what's going on */
+      /* border: solid 1px red; */
+      /* make the words evenly displayed vertically */
+      flex: 1 0 auto;
+      /* doesn't do much, but bring the words to the left */
+      display: flex;
+      /* so we justify-content and align-items again */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel > *:first-child {
+      transform: translateY(-100%);
+    }
+    .panel.open-active > *:first-child {
+      transform: translateY(0);
+    }
+    .panel >*:last-child {
+      transform: translateY(100%);
+    }
+    .panel.open-active > *:last-child {
+      transform: translateY(0);
     }
 
     .panel p {
@@ -67,6 +104,8 @@
     }
 
     .panel.open {
+      /* takes 5 times amount of space */
+      flex: 5;
       font-size:40px;
     }
 
@@ -102,6 +141,21 @@
   </div>
 
   <script>
+    const panels = document.querySelectorAll('.panel');
+
+    function toggleOpen() {
+      this.classList.toggle('open');
+    }
+
+    function toggleActive(e) {
+      console.log(e.propertyName);
+      if (e.propertyName.includes('flex')) {
+        this.classList.toggle('open-active');
+      }
+    }
+
+    panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
 
   </script>
 
